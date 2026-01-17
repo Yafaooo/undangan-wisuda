@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Undangan Wisuda | YAFAO MABE LAMBOE, S.KOM.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#000;
+    color:white;
+    overflow:hidden;
+}
+.gold{color:#d4af37}
+
+/* OPENING */
+#opening{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle,#111,#000);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+}
+.sweep::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(120deg,transparent,rgba(212,175,55,.4),transparent);
+    animation:sweep 2.5s ease forwards;
+}
+@keyframes sweep{
+    from{transform:translateX(-100%)}
+    to{transform:translateX(100%)}
+}
+
+/* SLIDER */
+#slider{
+    display:flex;
+    height:100vh;
+    width:500vw;
+    transition:transform 1.2s ease-in-out;
+}
+.slide{
+    width:100vw;
+    height:100vh;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem;
+    background:linear-gradient(160deg,#000,#111,#000);
+}
+
+/* ANIMATION */
+.fade{
+    animation:fadeUp 1.2s ease forwards;
+}
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px)}
+    to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio>
+    <source src="assets/music/backsound.mp3">
+</audio>
+
+<!-- OPENING -->
+<div id="opening">
+    <div class="text-center relative sweep">
+        <h1 class="text-5xl gold font-bold mb-6 animate-pulse">
+            Undangan Wisuda
+        </h1>
+        <button onclick="openInvitation()"
+        class="px-10 py-4 bg-yellow-500 text-black font-bold rounded-full shadow-xl hover:scale-105 transition">
+            🎉 Buka Undangan
+        </button>
+    </div>
+</div>
+
+<!-- SLIDER -->
+<div id="sliderWrap" class="hidden">
+<div id="slider">
+
+<!-- SLIDE 1 : AJAKAN -->
+<section class="slide">
+<div class="fade max-w-xl">
+<p class="text-lg text-gray-300 mb-6">
+Dengan penuh rasa syukur dan kebahagiaan,<br>
+kami mengundang Bapak / Ibu / Saudara / i
+untuk berkenan hadir pada acara wisuda:
+</p>
+
+<img src="assets/img/foto-wisuda.jpeg">
+
+
+<h2 class="text-4xl gold font-bold">YAFAO MABE LAMBOE</h2>
+<p class="text-xl mt-2">Sarjana Komputer (S.KOM.)</p>
+</div>
+</section>
+
+<!-- SLIDE 2 : DETAIL -->
+<section class="slide">
+<div class="fade max-w-xl">
+<h3 class="text-3xl gold mb-6 font-semibold">Detail Acara</h3>
+<p class="text-xl mb-3">📅 14 Februari 2026</p>
+<p>
+📍 <strong>REGALE International Convention Centre</strong><br>
+Jl. H. Adam Malik No.66–68<br>
+Medan Barat, Kota Medan<br>
+Sumatera Utara 20114
+</p>
+</div>
+</section>
+
+<!-- SLIDE 3 : COUNTDOWN -->
+<section class="slide">
+<div class="fade">
+<h3 class="text-3xl gold mb-6 font-semibold">⏳ Menuju Hari Wisuda</h3>
+<div id="countdown" class="text-4xl font-bold"></div>
+</div>
+</section>
+
+<!-- SLIDE 4 : MAP -->
+<section class="slide">
+<iframe
+src="https://www.google.com/maps?q=REGALE%20International%20Convention%20Centre&output=embed"
+width="90%" height="400" style="border:0;"
+class="rounded-xl shadow-2xl">
+</iframe>
+</section>
+
+<!-- SLIDE 5 : PENUTUP + KONFIRMASI -->
+<section class="slide">
+<div class="fade max-w-xl">
+<p class="text-lg text-gray-300 mb-8">
+Merupakan suatu kehormatan dan kebahagiaan bagi kami
+apabila Bapak / Ibu / Saudara / i berkenan hadir
+dan memberikan doa restu.
+</p>
+
+<a href="https://wa.me/6282272463816?text=Halo%20YAFAO,%20saya%20menyatakan%20bahwa%20saya%20akan%20hadir%20pada%20acara%20wisuda%20tanggal%2014%20Februari%202026."
+target="_blank"
+class="px-10 py-4 bg-green-500 rounded-full font-bold shadow-lg hover:scale-105 transition">
+✅ Oke, Saya Akan Hadir
+</a>
+
+<p class="mt-8 text-gray-400">
+Atas perhatian dan kehadirannya,<br>
+kami ucapkan terima kasih.
+</p>
+
+<p class="mt-6 text-gray-500 text-sm">
+© 2026 • Undangan Wisuda Digital
+</p>
+</div>
+</section>
+
+</div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+let index = 0;
+const total = 5;
+const slider = document.getElementById('slider');
+
+function openInvitation(){
+    document.getElementById('opening').style.display = 'none';
+    document.getElementById('sliderWrap').classList.remove('hidden');
+    document.getElementById('bgm').volume = 0.4;
+    document.getElementById('bgm').play();
+
+    setInterval(()=>{
+        index = (index + 1) % total;
+        slider.style.transform = `translateX(-${index * 100}vw)`;
+    }, 6000);
+}
+
+/* COUNTDOWN */
+const target = new Date("Feb 14, 2026 08:00:00").getTime();
+setInterval(()=>{
+    const now = new Date().getTime();
+    const d = target - now;
+
+    const days = Math.floor(d / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((d % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+        `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
+}, 1000);
+</script>
+
+</body>
+</html>
