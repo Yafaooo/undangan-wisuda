@@ -41,10 +41,15 @@ body{
 }
 
 /* SLIDER */
+#sliderWrap{
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+}
 #slider{
     display:flex;
-    height:100vh;
     width:500vw;
+    height:100vh;
     transition:transform 1.2s ease-in-out;
 }
 .slide{
@@ -55,8 +60,17 @@ body{
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:2rem;
-    background:linear-gradient(160deg,#000,#111,#000);
+    position:relative;
+}
+.slide::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.55);
+}
+.slide > div{
+    position:relative;
+    z-index:1;
 }
 
 /* ANIMATION */
@@ -64,32 +78,17 @@ body{
     animation:fadeUp 1.2s ease forwards;
 }
 @keyframes fadeUp{
-    from{opacity:0;transform:translateY(30px)}
+    from{opacity:0;transform:translateY(40px)}
     to{opacity:1;transform:translateY(0)}
 }
-    .slide::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,0.55);
-    z-index:0;
-}
-.slide > div{
-    position:relative;
-    z-index:1;
-}
-.slide{
-    position:relative;
-}
-
 </style>
 </head>
 
 <body>
 
 <!-- MUSIC -->
-<audio>
-    <source src="assets/music/backsound.mp3">
+<audio id="bgm" loop>
+    <source src="assets/music/backsound.mp3" type="audio/mpeg">
 </audio>
 
 <!-- OPENING -->
@@ -109,7 +108,7 @@ body{
 <div id="sliderWrap" class="hidden">
 <div id="slider">
 
-<!-- SLIDE 1 : AJAKAN -->
+<!-- SLIDE 1 -->
 <section class="slide">
 <div class="fade max-w-xl">
 <p class="text-lg text-gray-300 mb-6">
@@ -122,15 +121,14 @@ Undangan Wisuda
 </h1>
 
 <img src="assets/img/foto-wisuda.jpeg"
-class="w-44 h-44 md:w-56 md:h-56 rounded-full border-4 border-yellow-500 mx-auto mb-6 shadow-2xl">
-
+class="w-44 h-44 rounded-full border-4 border-yellow-500 mx-auto mb-6 shadow-2xl">
 
 <h2 class="text-4xl gold font-bold">YAFAO MABE LAMBOE</h2>
 <p class="text-xl mt-2">Sarjana Komputer (S.KOM.)</p>
 </div>
 </section>
 
-<!-- SLIDE 2 : DETAIL -->
+<!-- SLIDE 2 -->
 <section class="slide">
 <div class="fade max-w-xl">
 <h3 class="text-3xl gold mb-6 font-semibold">Detail Acara</h3>
@@ -144,7 +142,7 @@ Sumatera Utara 20114
 </div>
 </section>
 
-<!-- SLIDE 3 : COUNTDOWN -->
+<!-- SLIDE 3 -->
 <section class="slide">
 <div class="fade">
 <h3 class="text-3xl gold mb-6 font-semibold">⏳ Menuju Hari Wisuda</h3>
@@ -152,16 +150,16 @@ Sumatera Utara 20114
 </div>
 </section>
 
-<!-- SLIDE 4 : MAP -->
+<!-- SLIDE 4 -->
 <section class="slide">
 <iframe
 src="https://www.google.com/maps?q=REGALE%20International%20Convention%20Centre&output=embed"
-width="90%" height="400" style="border:0;"
-class="rounded-xl shadow-2xl">
+width="90%" height="400"
+class="rounded-xl shadow-2xl border-0">
 </iframe>
 </section>
 
-<!-- SLIDE 5 : PENUTUP + KONFIRMASI -->
+<!-- SLIDE 5 -->
 <section class="slide">
 <div class="fade max-w-xl">
 <p class="text-lg text-gray-300 mb-8">
@@ -170,20 +168,13 @@ apabila Bapak / Ibu / Saudara / i berkenan hadir
 dan memberikan doa restu.
 </p>
 
-<a href="https://wa.me/6282272463816?text=Halo%20YAFAO,%20saya%20menyatakan%20bahwa%20saya%20akan%20hadir%20pada%20acara%20wisuda%20tanggal%2014%20Februari%202026."
+<a href="https://wa.me/6282272463816?text=Halo%20YAFAO,%20saya%20akan%20hadir%20pada%20acara%20wisuda%2014%20Februari%202026"
 target="_blank"
 class="px-10 py-4 bg-green-500 rounded-full font-bold shadow-lg hover:scale-105 transition">
 ✅ Oke, Saya Akan Hadir
 </a>
 
-<p class="mt-8 text-gray-400">
-Atas perhatian dan kehadirannya,<br>
-kami ucapkan terima kasih.
-</p>
-
-<p class="mt-6 text-gray-500 text-sm">
-© 2026 • Undangan Wisuda Digital
-</p>
+<p class="mt-8 text-gray-400">Terima kasih atas perhatian Anda</p>
 </div>
 </section>
 
@@ -194,13 +185,15 @@ kami ucapkan terima kasih.
 <script>
 let index = 0;
 const total = 5;
-const slider = document.getElementById('slider');
+const slider = document.getElementById("slider");
 
 function openInvitation(){
-    document.getElementById('opening').style.display = 'none';
-    document.getElementById('sliderWrap').classList.remove('hidden');
-    document.getElementById('bgm').volume = 0.4;
-    document.getElementById('bgm').play();
+    document.getElementById("opening").style.display = "none";
+    document.getElementById("sliderWrap").classList.remove("hidden");
+
+    const music = document.getElementById("bgm");
+    music.volume = 0.4;
+    music.play();
 
     setInterval(()=>{
         index = (index + 1) % total;
@@ -214,17 +207,13 @@ setInterval(()=>{
     const now = new Date().getTime();
     const d = target - now;
 
-    const days = Math.floor(d / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((d % (1000 * 60)) / 1000);
-
     document.getElementById("countdown").innerHTML =
-        `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
-}, 1000);
+        Math.floor(d/86400000)+" Hari "+
+        Math.floor((d%86400000)/3600000)+" Jam "+
+        Math.floor((d%3600000)/60000)+" Menit "+
+        Math.floor((d%60000)/1000)+" Detik";
+},1000);
 </script>
 
 </body>
 </html>
-
-
